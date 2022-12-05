@@ -22,9 +22,9 @@ public class SqlProcess {
     }
 
     private void makeView(Connection conn) throws SQLException {
-        conn.prepareStatement("create view NE as select university.name, university.branch, region, homepage, officenumber, college, department, daynight, largeseries, middleseries, yearsystem from university, department;").executeUpdate();
-        conn.prepareStatement("create view EN as select university.name, branch, region, homepage, officenumber, admissionfee, tuitionfee from university, tuition;").executeUpdate();
-        conn.prepareStatement("create view NN as select university.name, university.branch, region, officenumber, college, department, daynight, largeseries, middleseries, yearsystem, admissionfee, tuitionfee from university, department, tuition;").executeUpdate();
+        conn.prepareStatement("create view EN as select U.name, branch, region, establish, address, homepage, officenumber, faxnumber, admissionfee, tuitionfee from university U, tuition T where U.name = T.name;").executeUpdate();
+        conn.prepareStatement("create view NE as select U.name, U.branch, region, homepage, officenumber, college, department, daynight, largeseries, middleseries, yearsystem, establish from university U, department D where U.name = D.name and U.branch = D.branch;").executeUpdate();
+        conn.prepareStatement("create view NN as select U.name, U.branch, region, homepage, officenumber, college, department, daynight, largeseries, middleseries, yearsystem, admissionfee, tuitionfee, establish from university U, department D, tuition T where U.name = D.name and U.name = T.name and U.branch = D.branch;").executeUpdate();
     }
 
     private void dropView(Connection conn) throws SQLException {

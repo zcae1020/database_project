@@ -30,11 +30,17 @@ public class InputView {
                     case 0:
                         String query = searchData.getQuery();
                         String view = searchData.getView();
-                        System.out.println(searchData.getQuery());
+                        System.out.println(query);
+                        if(query == null) {
+                            System.out.println("조건을 붙여서 검색해주세요");
+                            break;
+                        }
                         ResultSet rs = conn.prepareStatement(query).executeQuery();
                         List<Integer> favorite = outputView.printQuery(rs, view);
-                        rs = conn.prepareStatement(query).executeQuery();
-                        sqlProcess.insertFavorite(conn, rs, favorite);
+                        if(!favorite.isEmpty()) {
+                            rs = conn.prepareStatement(query).executeQuery();
+                            sqlProcess.insertFavorite(conn, rs, favorite);
+                        }
                         searchData = new SearchData();
                         break;
                     case 1:
@@ -67,9 +73,10 @@ public class InputView {
                         query = "select * from Favorite";
                         rs = conn.prepareStatement(query).executeQuery();
                         List<Integer> delFavorite = outputView.printFavorite(rs);
-                        rs = conn.prepareStatement(query).executeQuery();
-                        sqlProcess.deleteFavorite(conn, rs, delFavorite);
-                        //즐겨찾기
+                        if(!delFavorite.isEmpty()) {
+                            rs = conn.prepareStatement(query).executeQuery();
+                            sqlProcess.deleteFavorite(conn, rs, delFavorite);
+                        }
                         break;
                     default:
                         System.out.println("Please enter correctly!");
