@@ -58,28 +58,31 @@ public class SearchData {
         for (int i = 0; i < STRING_DATA_SIZE; i++) {
             if (!data.get(i).isEmpty()) {
                 List<String> curData = data.get(i);
+                ret += "(";
                 for (int j = 0; j < curData.size(); j++) {
                     ret += (ORDER_ENG.get(i) + " like \'%" + curData.get(j) + "%\' or ");
                 }
                 ret = ret.substring(0, ret.length() - 3);
-                ret += "and ";
+                ret += ") and ";
             }
         }
 
         if (!YearSystem.isEmpty()) {
+            ret += "(";
             for (List<Integer> integerList : YearSystem) {
                 ret += (integerList.get(0) + " >= YearSystem and " + integerList.get(1) + " <= YearSystem or ");
             }
             ret = ret.substring(0, ret.length() - 3);
-            ret += "and ";
+            ret += ") and ";
         }
 
         if (!TuitionFee.isEmpty()) {
+            ret += "(";
             for (List<Integer> integerList : TuitionFee) {
                 ret += (integerList.get(0) + " >= TuitionFee and " + integerList.get(1) + " <= TuitionFee or ");
             }
             ret = ret.substring(0, ret.length() - 3);
-            ret += "and ";
+            ret += ") and ";
         }
 
         return ret.substring(0, ret.length() - 4);
@@ -117,7 +120,7 @@ public class SearchData {
         if (!YearSystem.isEmpty()) {
             ret += ("수업연한: ");
             for (List<Integer> integerList : YearSystem) {
-                ret += ("최대치: " + integerList.get(0) + "최소치: " + integerList.get(1) + " | ");
+                ret += ("최대치: " + integerList.get(0) + ", 최소치: " + integerList.get(1) + " | ");
             }
             ret = ret.substring(0, ret.length() - 3) + '\n';
         }
@@ -125,7 +128,7 @@ public class SearchData {
         if (!TuitionFee.isEmpty()) {
             ret += ("등록금: ");
             for (List<Integer> integerList : TuitionFee) {
-                ret += ("최대치: " + integerList.get(0) + "최소치: " + integerList.get(1) + " | ");
+                ret += ("최대치: " + integerList.get(0) + ", 최소치: " + integerList.get(1) + " | ");
             }
             ret = ret.substring(0, ret.length() - 3) + '\n';
         }
