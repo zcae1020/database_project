@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 public class SearchData {
 
     private static final int STRING_DATA_SIZE = 6;
@@ -14,9 +15,11 @@ public class SearchData {
     public void addData(int index, String input) {
         data.get(index).add(input);
     }
+
     public void addYearSystem(List<Integer> yearSystem) {
         YearSystem.add(yearSystem);
     }
+
     public void addTuitionFee(List<Integer> tuition) {
         TuitionFee.add(tuition);
     }
@@ -32,13 +35,13 @@ public class SearchData {
     }
 
     private boolean isNone() {
-        for(int i=0;i<STRING_DATA_SIZE;i++){
-            if(!data.get(i).isEmpty()) {
+        for (int i = 0; i < STRING_DATA_SIZE; i++) {
+            if (!data.get(i).isEmpty()) {
                 return false;
             }
         }
 
-        if(!YearSystem.isEmpty() && !TuitionFee.isEmpty()){
+        if (!YearSystem.isEmpty() || !TuitionFee.isEmpty()) {
             return false;
         }
 
@@ -46,43 +49,49 @@ public class SearchData {
     }
 
     public String getQuery() {
-        if(isNone()) {
+        if (isNone()) {
             return null;
         }
 
         String ret = "select * from " + getView() + " where ";
 
-        for(int i=0;i<STRING_DATA_SIZE;i++){
-            if(!data.get(i).isEmpty()) {
+        for (int i = 0; i < STRING_DATA_SIZE; i++) {
+            if (!data.get(i).isEmpty()) {
                 List<String> curData = data.get(i);
-                for(int j=0;j<curData.size();j++) {
-                    ret+=(ORDER_ENG.get(i)+" like \'%" + curData.get(j) + "%\' and ");
+                for (int j = 0; j < curData.size(); j++) {
+                    ret += (ORDER_ENG.get(i) + " like \'%" + curData.get(j) + "%\' or ");
                 }
+                ret = ret.substring(0, ret.length() - 3);
+                ret += "and ";
             }
         }
 
-        if(!YearSystem.isEmpty()){
-            for(List<Integer> integerList:YearSystem) {
-                ret+=(integerList.get(0) + " >= YearSystem and " + integerList.get(1) + " <= YearSystem and ");
+        if (!YearSystem.isEmpty()) {
+            for (List<Integer> integerList : YearSystem) {
+                ret += (integerList.get(0) + " >= YearSystem and " + integerList.get(1) + " <= YearSystem or ");
             }
+            ret = ret.substring(0, ret.length() - 3);
+            ret += "and ";
         }
 
-        if(!TuitionFee.isEmpty()){
-            for(List<Integer> integerList:TuitionFee) {
-                ret+=(integerList.get(0) + " >= TuitionFee and " + integerList.get(1) + " <= TuitionFee and ");
+        if (!TuitionFee.isEmpty()) {
+            for (List<Integer> integerList : TuitionFee) {
+                ret += (integerList.get(0) + " >= TuitionFee and " + integerList.get(1) + " <= TuitionFee or ");
             }
+            ret = ret.substring(0, ret.length() - 3);
+            ret += "and ";
         }
 
         return ret.substring(0, ret.length() - 4);
     }
 
     public String getView() {
-        final List<String> view = Arrays.asList("University","en","ne","nn");
+        final List<String> view = Arrays.asList("University", "en", "ne", "nn");
 
         int situation = YearSystem.isEmpty() ? 0 : 1;
         // 학과 테이블의 등록된 attribute, 등록금의 유무에 따른 상황 분류
-        for(int idx : DEPARTMENT_TABLE_INDEX) {
-            if(!data.get(idx).isEmpty()) {
+        for (int idx : DEPARTMENT_TABLE_INDEX) {
+            if (!data.get(idx).isEmpty()) {
                 situation = 1;
             }
         }
@@ -91,31 +100,32 @@ public class SearchData {
 
         return view.get(situation);
     }
+
     @Override
     public String toString() {
         String ret = "";
-        for(int i=0;i<STRING_DATA_SIZE;i++){
-            if(!data.get(i).isEmpty()) {
-                ret+=(ORDER.get(i)+": ");
-                for(String str: data.get(i)) {
-                    ret+=(str+" | ");
+        for (int i = 0; i < STRING_DATA_SIZE; i++) {
+            if (!data.get(i).isEmpty()) {
+                ret += (ORDER.get(i) + ": ");
+                for (String str : data.get(i)) {
+                    ret += (str + " | ");
                 }
                 ret = ret.substring(0, ret.length() - 3) + '\n';
             }
         }
 
-        if(!YearSystem.isEmpty()){
-            ret+=("수업연한: ");
-            for(List<Integer> integerList:YearSystem) {
-                ret+=("최대치: " + integerList.get(0) + "최소치: " + integerList.get(1) + " | ");
+        if (!YearSystem.isEmpty()) {
+            ret += ("수업연한: ");
+            for (List<Integer> integerList : YearSystem) {
+                ret += ("최대치: " + integerList.get(0) + "최소치: " + integerList.get(1) + " | ");
             }
             ret = ret.substring(0, ret.length() - 3) + '\n';
         }
 
-        if(!TuitionFee.isEmpty()){
-            ret+=("등록금: ");
-            for(List<Integer> integerList:TuitionFee) {
-                ret+=("최대치: " + integerList.get(0) + "최소치: " + integerList.get(1) + " | ");
+        if (!TuitionFee.isEmpty()) {
+            ret += ("등록금: ");
+            for (List<Integer> integerList : TuitionFee) {
+                ret += ("최대치: " + integerList.get(0) + "최소치: " + integerList.get(1) + " | ");
             }
             ret = ret.substring(0, ret.length() - 3) + '\n';
         }

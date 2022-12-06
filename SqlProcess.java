@@ -41,10 +41,10 @@ public class SqlProcess {
 
         Collections.sort(favorite);
 
-        while(resultSet.next() && favoriteIdx < favorite.size()) {
-            if(idx == favorite.get(favoriteIdx)) {
-                for(int i=1;i<=5;i++) {
-                    if(i==3) { // department
+        while (resultSet.next() && favoriteIdx < favorite.size()) {
+            if (idx == favorite.get(favoriteIdx)) {
+                for (int i = 1; i <= 5; i++) {
+                    if (i == 3) { // department
                         p.setString(i, resultSet.getString(7));
                         continue;
                     }
@@ -66,8 +66,8 @@ public class SqlProcess {
 
         Collections.sort(delFavorite);
 
-        while(resultSet.next() && favoriteIdx < delFavorite.size()) {
-            if(idx == delFavorite.get(favoriteIdx)) {
+        while (resultSet.next() && favoriteIdx < delFavorite.size()) {
+            if (idx == delFavorite.get(favoriteIdx)) {
                 String sql = "delete from Favorite where" +
                         " name = \'" + resultSet.getString(1) + "\' and" +
                         " branch = \'" + resultSet.getString(2) + "\' and" +

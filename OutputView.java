@@ -109,7 +109,7 @@ public class OutputView {
                 }
             }
             for (int i = 9; i <= 10; i++) {
-                System.out.printf("| %-10d만원", rs.getInt(i));
+                System.out.printf("| %-10d원", rs.getInt(i));
             }
             System.out.println("|");
         }
@@ -178,7 +178,7 @@ public class OutputView {
             }
             System.out.printf("| %-5f년", rs.getFloat(11));
             for (int i = 12; i <= 13; i++) {
-                System.out.printf("| %-10d만원", rs.getInt(i));
+                System.out.printf("| %-10d원", rs.getInt(i));
             }
             System.out.println("|");
         }
@@ -243,10 +243,12 @@ public class OutputView {
 
     public List<Integer> printFavorite(ResultSet rs) throws SQLException {
         int idx = 1;
+        boolean flag = false;
 
         printAttrList(4);
 
         while (rs.next()) {
+            flag = true;
             System.out.printf("%-5d", idx++);
             for (int i = 1; i <= 5; i++) {
                 switch (attrLength.get(4).get(i)) {
@@ -271,7 +273,10 @@ public class OutputView {
         }
         System.out.println();
 
-        return askDelFavorite(idx);
+        if (flag) {
+            return askDelFavorite(idx);
+        }
+        return new ArrayList<>();
     }
 
     private List<Integer> askDelFavorite(int size) {

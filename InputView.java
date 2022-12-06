@@ -30,14 +30,13 @@ public class InputView {
                     case 0:
                         String query = searchData.getQuery();
                         String view = searchData.getView();
-                        System.out.println(query);
-                        if(query == null) {
+                        if (query == null) {
                             System.out.println("조건을 붙여서 검색해주세요");
                             break;
                         }
                         ResultSet rs = conn.prepareStatement(query).executeQuery();
                         List<Integer> favorite = outputView.printQuery(rs, view);
-                        if(!favorite.isEmpty()) {
+                        if (!favorite.isEmpty()) {
                             rs = conn.prepareStatement(query).executeQuery();
                             sqlProcess.insertFavorite(conn, rs, favorite);
                         }
@@ -73,7 +72,7 @@ public class InputView {
                         query = "select * from Favorite";
                         rs = conn.prepareStatement(query).executeQuery();
                         List<Integer> delFavorite = outputView.printFavorite(rs);
-                        if(!delFavorite.isEmpty()) {
+                        if (!delFavorite.isEmpty()) {
                             rs = conn.prepareStatement(query).executeQuery();
                             sqlProcess.deleteFavorite(conn, rs, delFavorite);
                         }
