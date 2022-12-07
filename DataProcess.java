@@ -33,7 +33,7 @@ public class DataProcess {
         conn.prepareStatement("create table University(Name varchar(64), Branch varchar(10), Region varchar(4), Establish varchar(10), Address varchar(64), Homepage varchar(64), OfficeNumber varchar(32), FaxNumber varchar(32), primary key(Name, Branch))").execute();
         conn.prepareStatement("create table Department(Name varchar(64), Branch varchar(10), College varchar(64), Department varchar(128), DayNight varchar(16), LargeSeries varchar(32), MiddleSeries varchar(32), YearSystem numeric(2,1))").execute();
         conn.prepareStatement("create table Tuition(Name varchar(64), AdmissionFee int, TuitionFee int, primary key(Name))").execute();
-        conn.prepareStatement("create table Favorite(Name varchar(64), Branch varchar(10), Department varchar(128), Homepage varchar(64), OfficeNumber varchar(32))").execute();
+        conn.prepareStatement("create table Favorite(Name varchar(64), Branch varchar(10), Department varchar(128), Homepage varchar(64), OfficeNumber varchar(32), primary key(Name, Branch, Department))").execute();
 
         sql = "insert into University values (?,?,?,?,?,?,?,?)";
         p = conn.prepareStatement(sql);

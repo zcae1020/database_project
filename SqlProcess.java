@@ -36,7 +36,7 @@ public class SqlProcess {
     public void insertFavorite(Connection conn, ResultSet resultSet, List<Integer> favorite) throws SQLException {
         int idx = 1;
         int favoriteIdx = 0;
-        String sql = "insert into Favorite values (?,?,?,?,?)";
+        String sql = "insert into Favorite values (?,?,?,?,?) on conflict (name, branch, department) do nothing";
         PreparedStatement p = conn.prepareStatement(sql);
 
         Collections.sort(favorite);
