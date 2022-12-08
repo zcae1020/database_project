@@ -28,15 +28,15 @@ public class SqlProcess {
     }
 
     private void dropView(Connection conn) throws SQLException {
-        conn.prepareStatement("drop view NE").executeUpdate();
-        conn.prepareStatement("drop view EN").executeUpdate();
-        conn.prepareStatement("drop view NN").executeUpdate();
+        conn.prepareStatement("drop view NE;").executeUpdate();
+        conn.prepareStatement("drop view EN;").executeUpdate();
+        conn.prepareStatement("drop view NN;").executeUpdate();
     }
 
     public void insertFavorite(Connection conn, ResultSet resultSet, List<Integer> favorite) throws SQLException {
         int idx = 1;
         int favoriteIdx = 0;
-        String sql = "insert into Favorite values (?,?,?,?,?) on conflict (name, branch, department) do nothing";
+        String sql = "insert into Favorite values (?,?,?,?,?) on conflict (name, branch, department) do nothing;";
         PreparedStatement p = conn.prepareStatement(sql);
 
         Collections.sort(favorite);
@@ -71,7 +71,7 @@ public class SqlProcess {
                 String sql = "delete from Favorite where" +
                         " name = \'" + resultSet.getString(1) + "\' and" +
                         " branch = \'" + resultSet.getString(2) + "\' and" +
-                        " department = \'" + resultSet.getString(3) + "\'";
+                        " department = \'" + resultSet.getString(3) + "\';";
                 conn.prepareStatement(sql).execute();
 
                 favoriteIdx++;

@@ -25,17 +25,17 @@ public class DataProcess {
         String sql;
         PreparedStatement p;
 
-        conn.prepareStatement("drop table University").execute();
-        conn.prepareStatement("drop table Department").execute();
-        conn.prepareStatement("drop table Tuition").execute();
-        conn.prepareStatement("drop table Favorite").execute();
+        conn.prepareStatement("drop table University;").execute();
+        conn.prepareStatement("drop table Department;").execute();
+        conn.prepareStatement("drop table Tuition;").execute();
+        conn.prepareStatement("drop table Favorite;").execute();
 
-        conn.prepareStatement("create table University(Name varchar(64), Branch varchar(10), Region varchar(4), Establish varchar(10), Address varchar(64), Homepage varchar(64), OfficeNumber varchar(32), FaxNumber varchar(32), primary key(Name, Branch))").execute();
-        conn.prepareStatement("create table Department(Name varchar(64), Branch varchar(10), College varchar(64), Department varchar(128), DayNight varchar(16), LargeSeries varchar(32), MiddleSeries varchar(32), YearSystem numeric(2,1), primary key(Name, Branch, College, Department, DayNight, MiddleSeries, YearSystem))").execute();
-        conn.prepareStatement("create table Tuition(Name varchar(64), AdmissionFee int, TuitionFee int, primary key(Name))").execute();
-        conn.prepareStatement("create table Favorite(Name varchar(64), Branch varchar(10), Department varchar(128), Homepage varchar(64), OfficeNumber varchar(32), primary key(Name, Branch, Department))").execute();
+        conn.prepareStatement("create table University(Name varchar(64), Branch varchar(10), Region varchar(4), Establish varchar(10), Address varchar(64), Homepage varchar(64), OfficeNumber varchar(32), FaxNumber varchar(32), primary key(Name, Branch));").execute();
+        conn.prepareStatement("create table Department(Name varchar(64), Branch varchar(10), College varchar(64), Department varchar(128), DayNight varchar(16), LargeSeries varchar(32), MiddleSeries varchar(32), YearSystem numeric(2,1), primary key(Name, Branch, College, Department, DayNight, MiddleSeries, YearSystem));").execute();
+        conn.prepareStatement("create table Tuition(Name varchar(64), AdmissionFee int, TuitionFee int, primary key(Name));").execute();
+        conn.prepareStatement("create table Favorite(Name varchar(64), Branch varchar(10), Department varchar(128), Homepage varchar(64), OfficeNumber varchar(32), primary key(Name, Branch, Department));").execute();
 
-        sql = "insert into University values (?,?,?,?,?,?,?,?)";
+        sql = "insert into University values (?,?,?,?,?,?,?,?);";
         p = conn.prepareStatement(sql);
         for (int i = 1; i < university.size(); i++) {
             for (int j = 1; j <= university.get(i).size(); j++) {
@@ -46,7 +46,7 @@ public class DataProcess {
         }
         p.executeBatch();
 
-        sql = "insert into Department values (?,?,?,?,?,?,?,?)";
+        sql = "insert into Department values (?,?,?,?,?,?,?,?);";
         p = conn.prepareStatement(sql);
         for (int i = 0; i < department.size(); i++) {
             for (int j = 1; j <= department.get(i).size(); j++) {
@@ -62,7 +62,7 @@ public class DataProcess {
         }
         p.executeBatch();
 
-        sql = "insert into Tuition values (?,?,?)";
+        sql = "insert into Tuition values (?,?,?);";
         p = conn.prepareStatement(sql);
         for (int i = 0; i < tuition.size(); i++) {
             for (int j = 1; j <= tuition.get(i).size(); j++) {
@@ -80,7 +80,7 @@ public class DataProcess {
     }
 
     private static List<List<String>> readToList(File csv) {
-        List<List<String>> list = new ArrayList<List<String>>();
+        List<List<String>> list = new ArrayList<>();
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(csv));
@@ -89,10 +89,6 @@ public class DataProcess {
 
             while ((line = br.readLine()) != null) {
                 String[] token = line.split(",");
-//                for(String tok: token) {
-//                    System.out.print(tok+" | ");
-//                }
-//                System.out.println();
                 List<String> tempList = new ArrayList<String>(Arrays.asList(token));
                 list.add(tempList);
             }

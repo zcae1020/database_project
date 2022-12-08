@@ -69,7 +69,7 @@ public class InputView {
                         searchData.addTuitionFee(Arrays.asList(maxFee, minFee));
                         break;
                     case 9:
-                        query = "select * from Favorite";
+                        query = "select * from Favorite;";
                         rs = conn.prepareStatement(query).executeQuery();
                         List<Integer> delFavorite = outputView.printFavorite(rs);
                         if (!delFavorite.isEmpty()) {

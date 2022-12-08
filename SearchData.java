@@ -62,7 +62,7 @@ public class SearchData {
                 for (int j = 0; j < curData.size(); j++) {
                     ret += (ORDER_ENG.get(i) + " like \'%" + curData.get(j) + "%\' or ");
                 }
-                ret = ret.substring(0, ret.length() - 3);
+                ret = ret.substring(0, ret.length() - 4);
                 ret += ") and ";
             }
         }
@@ -72,7 +72,7 @@ public class SearchData {
             for (List<Integer> integerList : YearSystem) {
                 ret += (integerList.get(0) + " >= YearSystem and " + integerList.get(1) + " <= YearSystem or ");
             }
-            ret = ret.substring(0, ret.length() - 3);
+            ret = ret.substring(0, ret.length() - 4);
             ret += ") and ";
         }
 
@@ -81,11 +81,11 @@ public class SearchData {
             for (List<Integer> integerList : TuitionFee) {
                 ret += (integerList.get(0) + " >= TuitionFee and " + integerList.get(1) + " <= TuitionFee or ");
             }
-            ret = ret.substring(0, ret.length() - 3);
+            ret = ret.substring(0, ret.length() - 4);
             ret += ") and ";
         }
 
-        return ret.substring(0, ret.length() - 4);
+        return ret.substring(0, ret.length() - 5) + ";";
     }
 
     public String getView() {
